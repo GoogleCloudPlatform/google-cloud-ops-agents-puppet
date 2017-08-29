@@ -2,20 +2,15 @@
   "name": "google-glogging",
   "version": "0.1.0",
   "author": "Google",
-  "summary": "Installs, configures, and manages the Google Logging service.",
+  "summary": "A Puppet module to manage Google Stackdriver Logging Agent",
   "license": "Apache-2.0",
-  "source": "git://github.com/googlecloudplatform/puppet-google-glogging.git",
-  "project_page": "http://github.com/googlecloudplatform/puppet-google-glogging",
-  "issues_url": "?????????????????????????????????????????",
-  "dependencies": [
-    {"name":"puppetlabs/stdlib","version_requirement":">= 3.2.0 < 5.0.0"}
-  ],
-  "data_provider": null,
+  "source": "https://github.com/GoogleCloudPlatform/puppet-google-logging",
+  "project_page": "https://github.com/GoogleCloudPlatform/puppet-google-logging",
+  "issues_url": "https://github.com/GoogleCloudPlatform/puppet-google-logging/issues",
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "5",
         "6",
         "7"
       ]
@@ -23,38 +18,13 @@
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "5",
         "6",
         "7"
-      ]
-    },
-    {
-      "operatingsystem": "OracleLinux",
-      "operatingsystemrelease": [
-        "5",
-        "6",
-        "7"
-      ]
-    },
-    {
-      "operatingsystem": "Scientific",
-      "operatingsystemrelease": [
-        "5",
-        "6",
-        "7"
-      ]
-    },
-    {
-      "operatingsystem": "SLES",
-      "operatingsystemrelease": [
-        "11 SP1",
-        "12"
       ]
     },
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "6",
         "7",
         "8"
       ]
@@ -62,18 +32,43 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "10.04",
         "12.04",
         "14.04",
-        "16.04"
+        "16.04",
+        "16.10"
+      ]
+    },
+    {
+      "operatingsystem": "SLES",
+      "operatingsystemrelease": [
+        "11-sp4",
+        "12-sp2"
+      ]
+    },
+    {
+      "operatingsystem": "openSUSE",
+      "operatingsystemrelease": [
+        "13"
+      ]
+    },
+    {
+      "operatingsystem": "Windows Server",
+      "operatingsystemrelease": [
+        "2008 R2",
+        "2012 R2",
+        "2012 R2 Core",
+        "2016 R2",
+        "2016 R2 Core"
       ]
     }
   ],
-  "requirements": [
-    {
-      "name": "puppet",
-      "version_requirement": ">= 3.0.0 < 5.0.0"
-    }
+  "dependencies": [ ],
+  "requirements": [ ],
+  "tags": [
+    "google",
+    "cloud",
+    "logging",
   ],
-  "description": "Google Logging module"
+  "data_provider": null,
+  "description": "A Puppet module to manage Google Stackdriver Logging Agent"
 }
