@@ -67,7 +67,7 @@
   "tags": [
     "google",
     "cloud",
-    "logging",
+    "logging"
   ],
   "data_provider": null,
   "description": "A Puppet module to manage Google Stackdriver Logging Agent"
