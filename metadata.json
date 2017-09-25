@@ -62,7 +62,12 @@
       ]
     }
   ],
-  "dependencies": [ ],
+  "dependencies": [
+    {
+      "name": "puppetlabs/apt",
+      "version_requirement": ">= 4.1.0"
+    }
+  ],
   "requirements": [ ],
   "tags": [
     "google",

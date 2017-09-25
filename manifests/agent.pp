@@ -14,8 +14,9 @@ class glogging::agent(
     }
 
     /Debian/: { # Debian, Ubuntu
-      fail('TODO(nelsonjr): Implement Ubuntu/Debian support')
-      include glogging::agent::debian
+      class { 'glogging::agent::debian':
+        credential_file => $credential_file,
+      }
     }
 
     /Windows/: {
