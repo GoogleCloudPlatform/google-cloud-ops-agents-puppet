@@ -12,8 +12,25 @@ network, and process metrics.
 
 ## Permissions Required
 
-The machine requires the `https://www.googleapis.com/auth/logging.write` to be
-able to write logs
+Each GCP machine requires the `https://www.googleapis.com/auth/logging.write`
+scope in order to write logs.
+
+Using the gcompute_instance resource, you can add the following:
+
+```puppet
+gcompute_instance { 'my-vm':
+  ...
+  service_accounts   => {
+    ...
+    scopes => [
+        ...
+        # Enable Stackdriver Logging API access
+        'https://www.googleapis.com/auth/logging.write',
+        ...
+    ],
+  }
+}
+```
 
 ## Puppet Manifest
 
@@ -22,6 +39,7 @@ To use, add the following class to your Puppet manifest.
     include glogging::agent
 
 ## Viewing Logs
+
 Please go to the [Google Cloud console][logs] to view the Stackdriver logs.
 
 
