@@ -19,8 +19,7 @@ class glogging::agent(
       }
     }
 
-    /Windows/: {
-      fail('TODO(nelsonjr): Implement Windows support')
+    /windows/: {
       include glogging::agent::windows
     }
 
