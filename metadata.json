@@ -1,6 +1,6 @@
 {
   "name": "google-glogging",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Google",
   "summary": "A Puppet module to manage Google Stackdriver Logging Agent",
   "license": "Apache-2.0",
@@ -66,13 +66,20 @@
     {
       "name": "puppetlabs/apt",
       "version_requirement": ">= 4.1.0 < 5.0.0"
+    },
+    {
+      "name": "puppetlabs/powershell",
+      "version_requirement": ">= 2.1.3 < 3.0.0"
     }
   ],
   "requirements": [ ],
   "tags": [
     "google",
     "cloud",
-    "logging"
+    "logging",
+    "monitoring",
+    "stackdriver",
+    "stackdriver-agent"
   ],
   "data_provider": null,
   "description": "A Puppet module to manage Google Stackdriver Logging Agent"
