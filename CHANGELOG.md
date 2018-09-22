@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3 (2018-08-17)
+
+- Support for new apt package.
+
 ## 0.1.2 (2018-03-16)
 
 - Windows support
