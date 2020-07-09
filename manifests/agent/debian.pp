@@ -25,7 +25,7 @@ class glogging::agent::debian(
     release  => $repo_name,
     repos    => 'main',
     key      => {
-      'id'     => 'D0BC747FD8CAF7117500D6FA3746C208A7317B0F',
+      'id'     => '54A647F9048D5688D7DA2ABE6A030B21BA07F4FB',
       'server' => 'pgp.mit.edu',
     },
     include  => {
