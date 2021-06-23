@@ -56,8 +56,8 @@ define cloud_ops::agent (
 
       if $agent_type == 'ops-agent' {
         exec { "install-${agent_type}":
-          command => "${googet} -noconfirm install google-cloud-ops-agent.${version}",
-          unless  => "${system_root}\\cmd.exe /c ${googet} verify google-cloud-ops-agent | findstr /i \"Verification of google-cloud-ops-agent.x86_64.1.0.1@1 completed\"",
+          command => "${googet} -noconfirm install google-cloud-ops-agent.x86_64.${version}",
+          unless  => "${system_root}\\cmd.exe /c ${googet} verify google-cloud-ops-agent | findstr /i \"Verification of google-cloud-ops-agent.x86_64.${version} completed\"",
         }
       }
 
@@ -73,7 +73,7 @@ define cloud_ops::agent (
         # Puppet does not support restarting services that have dependant services
         # https://puppet.com/docs/puppet/5.5/types/service.html#service-provider-windows
         exec { "remove-${agent_type}":
-          command     => "${system_root}\\cmd.exe /c net stop ${service_name} /y",
+          command     => "${system_root}\\WindowsPowerShell\\v1.0\\powershell.exe -Command \"Stop-Service -Name ${service_name} -Force -Verbose\"",
           subscribe   => File[$config_path],
           refreshonly => true,
           notify      => Service[$service_name]
@@ -84,7 +84,7 @@ define cloud_ops::agent (
       if $agent_type == 'ops-agent' {
         exec { "remove-${agent_type}":
           command => "${googet} -noconfirm remove google-cloud-ops-agent",
-          onlyif  => "${system_root}\\cmd.exe /c ${googet} verify google-cloud-ops-agent | findstr /i \"Verification of google-cloud-ops-agent.x86_64.1.0.1@1 completed\"",
+          onlyif  => "${system_root}\\cmd.exe /c ${googet} verify google-cloud-ops-agent | findstr /i \"Verification of google-cloud-ops-agent.x86_64.${version} completed\"",
         }
       }
     }

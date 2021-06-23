@@ -31,7 +31,7 @@ variable "ssh_public_key" {
   default     = "~/.ssh/id_rsa.pub"
 }
 
-resource "google_compute_instance" "linux" {
+resource "google_compute_instance" "instance" {
   project      = var.project
   name         = terraform.workspace
   machine_type = var.instance_type

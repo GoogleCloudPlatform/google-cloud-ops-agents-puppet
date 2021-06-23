@@ -59,3 +59,6 @@ for i in $(seq ${count}); do
     echo "Attempt failed, sleep 10 seconds before trying again"
     sleep 10
 done
+
+# Exit non zero on failure
+exit 1

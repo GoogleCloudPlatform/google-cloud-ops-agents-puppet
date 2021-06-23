@@ -1,18 +1,20 @@
 ---
-name: integration
+name: linux
 on:
   pull_request:
     paths:
-      - ".github/**"
+      - ".github/workflows/linux.yml"
+      - ".github/scripts/**"
       - "manifests/**"
-      - "test/cases/**"
+      - "test/cases/linux/**"
       - "test/terraform/**"
       - "Puppetfile"
   push:
     paths:
-      - ".github/**"
+      - ".github/workflows/linux.yml"
+      - ".github/scripts/**"
       - "manifests/**"
-      - "test/cases/**"
+      - "test/cases/linux/**"
       - "test/terraform/**"
       - "Puppetfile"
     branches:
@@ -31,7 +33,7 @@ jobs:
           - logging
           - monitoring
         version:
-          - "1.0.4"
+          #- "1.0.4"
           - latest
         # distro is the key for determining instance name and gce image
         distro:
@@ -45,7 +47,6 @@ jobs:
           - centos-7
           - rhel-8
           - rhel-7
-          # suse packer builds are flaky
           - suse-15
           - suse-12
         exclude:

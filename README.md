@@ -1,7 +1,8 @@
 # Cloud Operations Puppet Agents
 
-[![Status](https://github.com/BlueMedora/puppet-google-logging/workflows/integration/badge.svg)](https://github.com/BlueMedora/puppet-google-logging/integration)
-[![Status](https://github.com/BlueMedora/puppet-google-logging/workflows/shellcheck/badge.svg)](https://github.com/BlueMedora/puppet-google-logging/shellcheck)
+[![Status](https://github.com/BlueMedora/google-puppet-agents/workflows/linux/badge.svg)](https://github.com/BlueMedora/google-puppet-agents/linux)
+[![Status](https://github.com/BlueMedora/google-puppet-agents/workflows/windows/badge.svg)](https://github.com/BlueMedora/google-puppet-agents/windows)
+[![Status](https://github.com/BlueMedora/google-puppet-agents/workflows/shellcheck/badge.svg)](https://github.com/BlueMedora/google-puppet-agents/shellcheck)
 
 ## Description
 
