@@ -31,8 +31,7 @@ jobs:
         agent_type:
           - ops-agent
         version:
-          - "1.0.4"
-          #- latest
+          - "1.0.10"
         # distro is the key for determining instance name and gce image
         distro:
           - windows-2019
@@ -94,6 +93,20 @@ jobs:
           VERSION: ${{ matrix.version }}
           AGENT_TYPE: ${{ matrix.agent_type }}
           ACTION: uninstall
+        timeout-minutes: 10
+
+      - name: Test Install w/ Custom Config
+        run: |
+          INSTANCE=$(echo ${{ matrix.distro }}-${{ matrix.agent_type }}-${{ matrix.version }}-$(git rev-parse --short HEAD) | tr -d '.')
+          export ADDRESS=$(gcloud --project "${PROJECT}" compute instances describe --zone "${ZONE}" "${INSTANCE}" --format=json | jq -r '.networkInterfaces[0].accessConfigs[0].natIP')
+          ./.github/scripts/puppet.sh
+          ./.github/scripts/inspec.sh
+        env:
+          PROJECT: ${{ secrets.GCP_PROJECT_ID }}
+          PLATFORM: windows
+          VERSION: ${{ matrix.version }}
+          AGENT_TYPE: ${{ matrix.agent_type }}
+          ACTION: custom_config
         timeout-minutes: 10
 
       - name: Tear down instance

@@ -67,16 +67,24 @@ define cloud_ops::agent (
           source  => $main_config,
           owner   => 'Administrators',
           mode    => '0664',
-          require => Exec["install-${agent_type}"]
+          require => Exec["install-${agent_type}"],
+          notify  => Exec['wait-for-start']
+        }
+
+        # We need to wait for the agent service to start to prevent restarting
+        # it too soon, which results in an error
+        # ping with a timeout is the best way to get windows to sleep over ssh
+        exec { 'wait-for-start':
+          command => "${system_root}\\ping.exe -n 20 127.0.0.1"
         }
 
         # Puppet does not support restarting services that have dependant services
         # https://puppet.com/docs/puppet/5.5/types/service.html#service-provider-windows
-        exec { "remove-${agent_type}":
-          command     => "${system_root}\\WindowsPowerShell\\v1.0\\powershell.exe -Command \"Stop-Service -Name ${service_name} -Force -Verbose\"",
+        exec { "restart-${agent_type}":
+          command     => "${system_root}\\cmd.exe /c net stop ${service_name} /y",
           subscribe   => File[$config_path],
           refreshonly => true,
-          notify      => Service[$service_name]
+          notify      => Service[$service_name],
         }
       }
 
