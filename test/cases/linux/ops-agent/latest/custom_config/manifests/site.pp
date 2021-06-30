@@ -12,6 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cloud_ops::agent {'ops-agent':
+google_cloud_ops::agent {'ops-agent':
   agent_type  => 'ops-agent',  main_config => '/tmp/cases/linux/ops-agent/1.0.4/custom_config/config.yaml'
 }

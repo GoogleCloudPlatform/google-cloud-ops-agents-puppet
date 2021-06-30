@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cloud_ops::agent {'logging':
+google_cloud_ops::agent {'logging':
   agent_type    => 'logging',
   package_state => 'absent'
 }

@@ -69,7 +69,7 @@ An example implementation can be found in [example/manifests/ops_agent.pp](examp
 
 Install the latest version:
 ```ruby
-cloud_ops::agent {'ops-agent':
+google_cloud_ops::agent {'ops-agent':
   agent_type  => 'ops-agent',
 }
 ```
@@ -82,7 +82,7 @@ This example assumes:
 
 Install version 1.0.5 and use a custom configuration:
 ```ruby
-cloud_ops::agent {'ops-agent':
+google_cloud_ops::agent {'ops-agent':
   agent_type  => 'ops-agent',
   installed   => true,
   version     => '1.0.5',
@@ -94,7 +94,7 @@ cloud_ops::agent {'ops-agent':
 
 Ensure the agent is not installed by setting `installed` to false:
 ```ruby
-cloud_ops::agent {'ops-agent':
+google_cloud_ops::agent {'ops-agent':
   agent_type  => 'ops-agent',
   installed   => false,
   version     => 'latest',
@@ -108,7 +108,7 @@ cloud_ops::agent {'ops-agent':
 - Use custom plugins
 
 ```ruby
-cloud_ops::agent {'monitoring-agent':
+google_cloud_ops::agent {'monitoring-agent':
   agent_type            => 'monitoring',
   installed             => true,
   version               => '6.*.*',
@@ -126,7 +126,7 @@ cloud_ops::agent {'monitoring-agent':
 - Use custom plugins
 
 ```ruby
-cloud_ops::agent {'logging-agent':
+google_cloud_ops::agent {'logging-agent':
   agent_type            => 'logging',
   installed             => true,
   version               => 'latest',

@@ -73,9 +73,9 @@ run_puppet_linux() {
     rsync ./Puppetfile "ci@${ADDRESS}:/etc/puppet/Puppetfile" || return
     ssh "ci@${ADDRESS}" 'cd /etc/puppet/ && r10k puppetfile install' || return
 
-    echo "copying module to /etc/puppet/modules/cloud_ops"
+    echo "copying module to /etc/puppet/modules/google_cloud_ops"
     rsync -r ./* \
-        "ci@${ADDRESS}:/etc/puppet/modules/cloud_ops" \
+        "ci@${ADDRESS}:/etc/puppet/modules/google_cloud_ops" \
         --exclude test/ || return
 
     echo "copying test cases"
@@ -92,18 +92,18 @@ run_puppet_linux() {
 }
 
 run_puppet_windows() {
-    echo 'creating dir C:\ci\puppet\modules\cloud_ops'
-    ssh "ci@${ADDRESS}" "md C:\\ci\\puppet\\modules\\cloud_ops" || return
+    echo 'creating dir C:\ci\puppet\modules\google_cloud_ops'
+    ssh "ci@${ADDRESS}" "md C:\\ci\\puppet\\modules\\google_cloud_ops" || return
 
     echo "installing dependencies with r10k"
     scp ./Puppetfile "ci@${ADDRESS}:C:/Users/ci/" || return
     ssh "ci@${ADDRESS}" 'r10k puppetfile install' || return
 
-    echo "copying module and test cases to C:/ci/puppet/modules/cloud_ops/"
+    echo "copying module and test cases to C:/ci/puppet/modules/google_cloud_ops/"
     scp -r ./* \
-        "ci@${ADDRESS}:C:/ci/puppet/modules/cloud_ops/" || return
+        "ci@${ADDRESS}:C:/ci/puppet/modules/google_cloud_ops/" || return
 
-    site_base='C:/ci/puppet/modules/cloud_ops'
+    site_base='C:/ci/puppet/modules/google_cloud_ops'
     site_path="${site_base}/test/cases/${PLATFORM}/${AGENT_TYPE}/${VERSION}/${ACTION}/manifests/site.pp"
     module_path="C:/ci/puppet/modules"
 

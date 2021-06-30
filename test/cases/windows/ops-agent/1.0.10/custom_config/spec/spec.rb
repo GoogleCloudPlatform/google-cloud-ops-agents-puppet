@@ -20,5 +20,5 @@ end
 
 describe file("C:\\Program Files\\Google\\Cloud Operations\\Ops Agent\\config\\config.yaml") do
     it { should exist }
-    its('sha256sum') { should eq '8907261f953f902a25c1c5a82365994a3de14301699ba0d3b4cc44f6490c41bc' }
+    its('sha256sum') { should eq '62067d867f435a95e47e2bbeb19c3276e39da064400536304d8347945a04c4ee' }
 end

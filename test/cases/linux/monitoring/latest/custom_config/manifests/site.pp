@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cloud_ops::agent {'monitoring':
+google_cloud_ops::agent {'monitoring':
   agent_type            => 'monitoring',
   main_config           => '/tmp/cases/linux/monitoring/latest/custom_config/files/collectd.conf',
   additional_config_dir => '/tmp/cases/linux/monitoring/latest/custom_config/files/plugins'

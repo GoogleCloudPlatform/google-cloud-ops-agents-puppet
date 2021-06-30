@@ -17,13 +17,13 @@
 # Installs a Google Cloud agent
 #
 # @example
-#   cloud_ops::agent { 'ops-agent':
+#   google_cloud_ops::agent { 'ops-agent':
 #    agent_type    => 'ops-agent',
 #    package_state => 'present',
 #    version       => '1.0.5',
 #    main_config   => 'puppet:///modules/example/ops_agent/config.yaml',
 #  }
-define cloud_ops::agent (
+define google_cloud_ops::agent (
   String $agent_type,
   String $version = 'latest',
   String $package_state = 'present',
