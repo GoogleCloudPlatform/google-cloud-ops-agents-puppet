@@ -33,7 +33,7 @@ jobs:
           - logging
           - monitoring
         version:
-          #- "1.0.4"
+          - "1.0.4"
           - latest
         # distro is the key for determining instance name and gce image
         distro:
