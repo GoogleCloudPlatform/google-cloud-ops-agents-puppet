@@ -23,7 +23,7 @@ Puppet module for [Google Cloud Operations agents](https://cloud.google.com/stac
 
 ## Requirements
 
-Permissions to the Google Cloud API. If you are running an old Compute Engine instance or Compute Engine instances created without the default credentials, then you must complete the following steps https://cloud.google.com/monitoring/agent/authorization#before_you_begin.
+https://cloud.google.com/stackdriver/docs/solutions/agents/ops-agent#access
 
 ## Prerequisite Modules
 
