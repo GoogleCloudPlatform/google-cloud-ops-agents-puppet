@@ -14,6 +14,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# This script waits for an instance to boot and allow ssh connections,
+# an alternative approach to sleeping N minutes after deploying instances.
+#
+#      - name: Configure SSH
+#        run: |
+#          INSTANCE=$(echo ${{ matrix.distro }}-${{ matrix.agent_type }}-${{ matrix.version }}-$(git rev-parse --short HEAD) | tr -d '.')
+#          ./.github/scripts/ssh.sh $INSTANCE
+#        env:
+#          PROJECT: ${{ secrets.GCP_PROJECT_ID }}
+#        timeout-minutes: 10
+
 set -e
 
 if [ -z "$1" ]; then
@@ -22,11 +33,13 @@ if [ -z "$1" ]; then
 fi
 INSTANCE=$1
 
+# The project_id the instance was deployed to
 if [ -z "$PROJECT" ]; then
     echo "PROJECT not set"
     exit 1
 fi
 
+# The zone the instance was deployed to
 if [ -z "$ZONE" ]; then
     echo "ZONE not set"
     exit 1

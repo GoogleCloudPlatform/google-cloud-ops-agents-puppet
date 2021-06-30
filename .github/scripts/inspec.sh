@@ -14,36 +14,47 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# This script runs inspec tests using https://cinc.sh/, a free distribution of Chef's Inspec.
+# Workflows can call this script like this:
+#
+#      - name: Test Install
+#        run: |
+#          INSTANCE=$(echo ${{ matrix.distro }}-${{ matrix.agent_type }}-${{ matrix.version }}-$(git rev-parse --short HEAD) | tr -d '.')
+#          export ADDRESS=$(gcloud --project "${PROJECT}" compute instances describe --zone "${ZONE}" "${INSTANCE}" --format=json | jq -r '.networkInterfaces[0].accessConfigs[0].natIP')
+#          ./.github/scripts/puppet.sh
+#          ./.github/scripts/inspec.sh
+#        env:
+#          PLATFORM: linux
+#          VERSION: ${{ matrix.version }}
+#          AGENT_TYPE: ${{ matrix.agent_type }}
+#          ACTION: install
+#        timeout-minutes: 10
+
+# Platform is used to determine the diectory path in test/cases/
 if [ -z "$PLATFORM" ]; then
     echo "PLATFORM not set"
     exit 1
 fi
 
+# Version is used to determine the diectory path in test/cases/
 if [ -z "$VERSION" ]; then
     echo "VERSION not set"
     exit 1
 fi
 
+# Agent type is used to determine the diectory path in test/cases/
 if [ -z "$AGENT_TYPE" ]; then
     echo "AGENT_TYPE not set"
     exit 1
 fi
 
+# Action is used to determine the diectory path in test/cases/
 if [ -z "$ACTION" ]; then
     echo "ACTION not set"
     exit 1
 fi
 
-if [ -z "$PROJECT" ]; then
-    echo "PROJECT not set"
-    exit 1
-fi
-
-if [ -z "$ZONE" ]; then
-    echo "ZONE not set"
-    exit 1
-fi
-
+# Address is the ip address targetted by the test suite
 if [ -z "$ADDRESS" ]; then
     echo "ADDRESS not set"
     exit 1

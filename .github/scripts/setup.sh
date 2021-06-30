@@ -14,20 +14,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# This script is run inside a workflow to install required packages
+# such as Puppet PDK, Terraform, cinc-auditor (inspec alternative).
+# In addition, the ssh keypair set inside Github Secrets will be installed
+# to ~/.ssh, allowing Terraform to deploy instances with the public key and
+# Puppet / cinc-auditor to use the private key.
+#
+#      - name: Install test utils
+#        run: ./.github/scripts/setup.sh
+#        env:
+#          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#          PUBLIC_KEY: ${{ secrets.SSH_PUBLIC_KEY }}
+#
+
 set -e
 
 export DEBIAN_FRONTEND=noninteractive
 
+# The Terraform version to install
 if [ -z "$TF_VERSION" ]; then
     echo "TF_VERSION not set"
     exit 1
 fi
 
+# SSH Private Key 
 if [ -z "$PRIVATE_KEY" ]; then
     echo "PRIVATE_KEY not set"
     exit 1
 fi
 
+# SSH Public Key
 if [ -z "$PUBLIC_KEY" ]; then
     echo "PUBLIC_KEY not set"
     exit 1
