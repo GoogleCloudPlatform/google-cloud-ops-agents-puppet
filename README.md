@@ -1,4 +1,4 @@
-# Cloud Operations Puppet Agents
+# Google Cloud Operations Agents Puppet Integration
 
 [![Status](https://github.com/BlueMedora/google-puppet-agents/workflows/linux/badge.svg)](https://github.com/BlueMedora/google-puppet-agents/linux)
 [![Status](https://github.com/BlueMedora/google-puppet-agents/workflows/windows/badge.svg)](https://github.com/BlueMedora/google-puppet-agents/windows)
