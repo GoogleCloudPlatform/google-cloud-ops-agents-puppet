@@ -11,7 +11,7 @@ Puppet module for [Google Cloud Operations agents](https://cloud.google.com/stac
 ## Support Matrix
 
 - Linux
-  - [Cloud Ops Agent](https://cloud.google.com/stackdriver/docs/solutions/agents/ops-agent)
+  - [Ops Agent](https://cloud.google.com/stackdriver/docs/solutions/agents/ops-agent)
     - [Supported Instances](https://cloud.google.com/stackdriver/docs/solutions/agents/ops-agent#supported_vms)
   - [Monitoring Agent](https://cloud.google.com/stackdriver/docs/solutions/agents/monitoring)
     - [Supported Instances](https://cloud.google.com/stackdriver/docs/solutions/agents/monitoring#supported_vms)
