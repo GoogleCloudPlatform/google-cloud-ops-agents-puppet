@@ -18,15 +18,15 @@
 #
 # @example
 #   cloud_ops::agent { 'ops-agent':
-#    agent_type  => 'ops-agent',
-#    installed   => false,
-#    version     => '1.0.5',
-#    main_config => 'puppet:///modules/example/ops_agent/config.yaml',
+#    agent_type    => 'ops-agent',
+#    package_state => 'present',
+#    version       => '1.0.5',
+#    main_config   => 'puppet:///modules/example/ops_agent/config.yaml',
 #  }
 define cloud_ops::agent (
   String $agent_type,
   String $version = 'latest',
-  Boolean $installed = true,
+  String $package_state = 'present',
   String $main_config = '',
   String $additional_config_dir = ''
 ) {
@@ -62,7 +62,7 @@ define cloud_ops::agent (
   }
 
   if $facts['os']['family'] == 'windows' {
-    if $installed {
+    if $package_state == 'present' {
       exec { "install-repo-${agent_type}":
         command => "${googet} addrepo google-cloud-ops-agent-windows https://packages.cloud.google.com/yuck/repos/google-cloud-ops-agent-windows-all",
         unless  => "${system_root}\\cmd.exe /c ${googet} listrepos | findstr /i \"google-cloud-ops-agent-windows\""
@@ -127,7 +127,7 @@ define cloud_ops::agent (
       mode   => '0700',
     }
 
-    if $installed {
+    if $package_state == 'present' {
         exec { "install-${agent_type}":
           command  => "${script_path} --also-install --version=${version}",
           provider => shell,
@@ -141,7 +141,7 @@ define cloud_ops::agent (
         }
     }
 
-    if $installed {
+    if $package_state == 'present' {
       if $main_config.length > 0  {
         file { $config_path:
           ensure  => file,
@@ -168,7 +168,7 @@ define cloud_ops::agent (
     }
   }
 
-  if $installed {
+  if $package_state == 'present' {
     service { $service_name:
       ensure     => 'running',
       enable     => 'true',

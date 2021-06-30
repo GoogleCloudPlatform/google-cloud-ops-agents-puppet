@@ -13,6 +13,6 @@
 # limitations under the License.
 
 cloud_ops::agent {'monitoring':
-  agent_type => 'monitoring',
-  installed  => false
+  agent_type    => 'monitoring',
+  package_state => 'absent'
 }

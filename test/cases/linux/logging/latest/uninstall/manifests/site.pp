@@ -13,6 +13,6 @@
 # limitations under the License.
 
 cloud_ops::agent {'logging':
-  agent_type => 'logging',
-  installed  => false
+  agent_type    => 'logging',
+  package_state => 'absent'
 }

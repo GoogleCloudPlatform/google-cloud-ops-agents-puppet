@@ -45,7 +45,7 @@ To build the module from source:
 | Parameter               | Default       | Description                                                       |
 | ---                     | ---           | ---                                                               |
 | `agent_type`            | Required      | The agent type: `ops-agent`, `monitoring`, `logging`              |
-| `installed`             | `true`        | Boolean value. Ensure that the agent is installed or uninstalled  |
+| `package_state`         | `present`     | Whether the agent should be installed or not (`present` | `absent`) |
 | `version`               | `latest`      | The version variable can be used to specify which version of the agent to install. The allowed values are latest, MAJOR_VERSION.*.* and MAJOR_VERSION.MINOR_VERSION.PATCH_VERSION, which are described in detail below. |
 | `main_config`           |               | Optional value for overriding the default configuration           |
 | `additional_config_dir` |               | Optional value for overriding the plugins directory for the `monitoring` or `logging` agents |

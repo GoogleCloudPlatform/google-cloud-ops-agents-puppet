@@ -13,6 +13,6 @@
 # limitations under the License.
 
 cloud_ops::agent {'ops-agent':
-  agent_type => 'ops-agent',
-  installed  => false
+  agent_type    => 'ops-agent',
+  package_state => 'absent'
 }
