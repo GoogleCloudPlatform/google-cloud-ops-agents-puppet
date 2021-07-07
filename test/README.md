@@ -43,6 +43,10 @@ You can generate an SSH keypair with `ssh-keygen`. This keypair will be used for
 
 Packer will require access to Google APIs. This [guide provides](https://cloud.google.com/build/docs/building/build-vm-images-with-packer) examples on how to setup your working environment.
 
+Packer is used to build Linux images once. These images will be deployed by CI to speed up the test process and avoid inconsistency issues with apt / yum repositories. Windows images are built manually, but stored in the same manner.
+
+The project being used for CI deployments should have read access to these images.
+
 ### Linux
 
 Packer is used to "bake" `puppet` and `gcloud sdk` into base images. Using base images allows tests to be repeatable, reliable, fast.
