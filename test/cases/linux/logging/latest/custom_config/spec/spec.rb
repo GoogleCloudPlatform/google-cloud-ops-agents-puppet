@@ -26,11 +26,11 @@ describe file('/etc/google-fluentd/google-fluentd.conf') do
     its('sha256sum') { should eq '9f83e16f70a9b014cb7631f68eab6bab9f05e992d4db7873ed26ff28b087a533' }
 end
 
-describe file('/etc/google-fluentd/plugin/plugin.rb') do
+describe file('/etc/google-fluentd/plugin/custom_config.conf') do
     it { should exist }
     its('owner') { should eq 'root' }
     its('group') { should eq 'root' }
     its('mode') { should cmp '0644' }
-    its('sha256sum') { should eq '040c1d4c506c3d650e43ed268052d04c10e6267cfde3d7911f55ab0e43e2594b' }
+    its('sha256sum') { should eq '505623beffaac642dfa172f63ed68af72275b50a44760501a3ef62224bcd59a5' }
 end
 
