@@ -20,7 +20,7 @@
 #   google_cloud_ops::agent { 'ops-agent':
 #    agent_type    => 'ops-agent',
 #    package_state => 'present',
-#    version       => '1.0.5',
+#    version       => '2.0.1',
 #    main_config   => 'puppet:///modules/example/ops_agent/config.yaml',
 #  }
 define google_cloud_ops::agent (
@@ -45,7 +45,7 @@ define google_cloud_ops::agent (
     $tmp_dir = "/tmp/${agent_type}"
     $script_path = "${tmp_dir}/add-monitoring-agent-repo.sh"
     if $agent_type == 'ops-agent' {
-      $service_name   = 'google-cloud-ops-agent.target'
+      $service_name = 'google-cloud-ops-agent'
       $config_path    = '/etc/google-cloud-ops-agent/config.yaml'
       $script_source  = 'https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh'
     } elsif $agent_type == 'monitoring' {

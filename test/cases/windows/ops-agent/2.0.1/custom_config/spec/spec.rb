@@ -18,12 +18,7 @@ describe service('google-cloud-ops-agent') do
     it { should be_running }
 end
 
-describe package('google-cloud-ops-agent') do
-    it { should be_installed }
-    # This code will break, if 2.x.x is ever released
-    its('version') { should match /2./ }
-end
-
-describe file('/etc/google-cloud-ops-agent/config.yaml') do
+describe file("C:\\Program Files\\Google\\Cloud Operations\\Ops Agent\\config\\config.yaml") do
     it { should exist }
+    its('sha256sum') { should eq '8a8443831c2e3aab4aff5c64d7c2b6666c9c3c00045ebdc4121cd6e737369493' }
 end

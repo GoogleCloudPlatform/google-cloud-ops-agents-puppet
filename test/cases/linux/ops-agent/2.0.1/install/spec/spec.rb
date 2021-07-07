@@ -20,8 +20,7 @@ end
 
 describe package('google-cloud-ops-agent') do
     it { should be_installed }
-    # This code will break, if 2.x.x is ever released
-    its('version') { should match /2./ }
+    its('version') { should match /2.0.1/ }
 end
 
 describe file('/etc/google-cloud-ops-agent/config.yaml') do

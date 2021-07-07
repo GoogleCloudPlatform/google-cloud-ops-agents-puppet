@@ -31,7 +31,7 @@ jobs:
         agent_type:
           - ops-agent
         version:
-          - "1.0.10"
+          - "2.0.1"
         # distro is the key for determining instance name and gce image
         distro:
           - windows-2019

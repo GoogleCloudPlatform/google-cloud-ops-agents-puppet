@@ -13,17 +13,6 @@
 # limitations under the License.
 
 describe service('google-cloud-ops-agent') do
-    it { should be_installed }
-    it { should be_enabled }
-    it { should be_running }
-end
-
-describe package('google-cloud-ops-agent') do
-    it { should be_installed }
-    # This code will break, if 2.x.x is ever released
-    its('version') { should match /2./ }
-end
-
-describe file('/etc/google-cloud-ops-agent/config.yaml') do
-    it { should exist }
+    it { should_not be_enabled }
+    it { should_not be_running }
 end

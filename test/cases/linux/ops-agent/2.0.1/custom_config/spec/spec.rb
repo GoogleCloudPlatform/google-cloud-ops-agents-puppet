@@ -20,10 +20,14 @@ end
 
 describe package('google-cloud-ops-agent') do
     it { should be_installed }
-    # This code will break, if 2.x.x is ever released
-    its('version') { should match /2./ }
+    its('version') { should match /2.0.1/ }
 end
 
 describe file('/etc/google-cloud-ops-agent/config.yaml') do
     it { should exist }
+    its('owner') { should eq 'root' }
+    its('group') { should eq 'root' }
+    its('mode') { should cmp '0644' }
+    its('sha256sum') { should eq '802e5adb76188c88a7192dba0b4f6cfc9d22437ae7c7d98639ccc56d08f48454' }
 end
+
