@@ -1,12 +1,12 @@
 {
-  "name": "ops-cloud_ops",
+  "name": "google-cloud_ops_agents",
   "version": "0.1.0",
   "author": "Google Inc.",
-  "summary": "Manage Google Cloud Ops Agent",
+  "summary": "Manage Google Cloud Ops Agents",
   "license": "Apache-2.0",
-  "source": "https://github.com/BlueMedora/google-puppet-agents",
-  "project_page": "https://github.com/BlueMedora/google-puppet-agents",
-  "issues_url": "https://github.com/BlueMedora/google-puppet-agents/issues",
+  "source": "https://github.com/GoogleCloudPlatform/puppet-google-logging",
+  "project_page": "https://github.com/GoogleCloudPlatform/puppet-google-logging",
+  "issues_url": "https://github.com/GoogleCloudPlatform/puppet-google-logging/issues",
   "dependencies": [
     { "name": "lwf/remote_file", "version_requirement": ">= 1.1.3"}
   ],
