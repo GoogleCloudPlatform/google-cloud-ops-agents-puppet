@@ -82,24 +82,16 @@ Packer is currently not used to build Windows images. Windows images can be buil
 4. Install r10k
    1. In a new Powershell windows, run: `gem install r10k`
 5. Shutdown
-6. Create Disk Image
-   1. Navigate to Compute Engine --> Storage --> Disks
-   2. Select the disk for your instance
-   3. Choose "Create Image"
-      1. Name it `windows-2019-0`
-      2. Set family to `puppet-windows-2019`
-      3. Future images can be incremented, `puppet-windows-2019-1` and so on.
-   4. Ensure `terraform/main.tf` image mapping is pointing to the correct windows image
-7. Add user
+6. Add user
    1. Create a local user (not with a microsoft email)
    2. username: `ci`
    3. password: Can be anything. CI will use an ssh key for authentication
    4. Set the account type to administrator
-8. Install Powershell Core
+7. Install Powershell Core
    1.  `Invoke-WebRequest -Uri https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/PowerShell-7.1.3-win-x64.msi -OutFile C:/pw.msi`
    2.  `C:\pw.msi`
        1.  Enable "powershell remoting" during the install
-9.  Install SSH For Powershell
+8.  Install SSH For Powershell
    3.  `Invoke-WebRequest -Uri https://github.com/PowerShell/Win32-OpenSSH/releases/download/V8.6.0.0p1-Beta/OpenSSH-Win64.zip -OutFile C:/ssh.zip`
    4.  Extract the zip
    5.  Run: `C:\ssh\OpenSSH-Win64\install-sshd.ps1`
@@ -120,6 +112,14 @@ Packer is currently not used to build Windows images. Windows images can be buil
       1.  `ssh -i id_rsa ci@34.66.152.33`
           1.  You should not be prompted for a password
           2.  Run `puppet help` to verify
+9. Create Disk Image
+   1. Navigate to Compute Engine --> Storage --> Disks
+   2. Select the disk for your instance
+   3. Choose "Create Image"
+      1. Name it `windows-2019-0`
+      2. Set family to `puppet-windows-2019`
+      3. Future images can be incremented, `puppet-windows-2019-1` and so on.
+   4. Ensure `terraform/main.tf` image mapping is pointing to the correct windows image
 
 ## Terraform
 
