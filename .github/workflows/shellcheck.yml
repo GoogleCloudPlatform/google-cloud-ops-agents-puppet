@@ -2,11 +2,7 @@
 name: shellcheck
 on:
   pull_request:
-      paths:
-      - ".github/scripts/**"
   push:
-      paths:
-      - ".github/scripts/**"
       branches:
       - master
 jobs:
