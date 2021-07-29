@@ -2,23 +2,7 @@
 name: windows
 on:
   pull_request:
-    paths:
-      - ".github/workflows/windows.yml"
-      - ".github/scripts/**"
-      - "manifests/**"
-      - "test/cases/windows/**"
-      - "test/terraform/**"
-      - "Puppetfile"
-      - "metadata.json"
   push:
-    paths:
-      - ".github/workflows/windows.yml"
-      - ".github/scripts/**"
-      - "manifests/**"
-      - "test/cases/windows/**"
-      - "test/terraform/**"
-      - "Puppetfile"
-      - "metadata.json"
     branches:
       - master
 jobs:

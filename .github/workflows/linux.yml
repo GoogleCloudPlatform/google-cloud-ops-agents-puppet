@@ -2,23 +2,7 @@
 name: linux
 on:
   pull_request:
-    paths:
-      - ".github/workflows/linux.yml"
-      - ".github/scripts/**"
-      - "manifests/**"
-      - "test/cases/linux/**"
-      - "test/terraform/**"
-      - "Puppetfile"
-      - "metadata.json"
   push:
-    paths:
-      - ".github/workflows/linux.yml"
-      - ".github/scripts/**"
-      - "manifests/**"
-      - "test/cases/linux/**"
-      - "test/terraform/**"
-      - "Puppetfile"
-      - "metadata.json"
     branches:
       - master
 jobs:
