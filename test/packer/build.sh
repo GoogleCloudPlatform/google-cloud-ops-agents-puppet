@@ -22,7 +22,7 @@ cat <<END>packer.json
           "image_family": "puppet-${image_family}",
           "source_image_family": "${image_family}",
           "type": "googlecompute",
-          "project_id": "united-aura-313415",
+          "project_id": "stackdriver-test-143416",
           "ssh_username": "packer",
           "zone": "us-east1-b",
           "startup_script_file": "bootstrap.sh",

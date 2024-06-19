@@ -13,7 +13,7 @@
 # limitations under the License.
 
 variable "project" {
-  default = "united-aura-313415"
+  default = "stackdriver-test-143416"
 }
 
 variable "preemptible" {
