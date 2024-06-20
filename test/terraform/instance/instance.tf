@@ -66,6 +66,7 @@ resource "google_compute_instance" "instance" {
 
   metadata = {
     used_by   = "github-actions"
+    enable_oslogin = "false"
     workspace = terraform.workspace
     ssh-keys  = "ci:${file(var.ssh_public_key)}"
   }

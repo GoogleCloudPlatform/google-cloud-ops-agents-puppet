@@ -107,8 +107,9 @@ install_puppet() {
 install_gcloud() {
     if ! command -v COMMAND &> /dev/null
     then
-        curl https://sdk.cloud.google.com > install.sh
-        bash install.sh --disable-prompts
+        curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-481.0.0-linux-x86_64.tar.gz
+        tar -xzf google-cloud-cli-481.0.0-linux-x86_64.tar.gz
+        bash google-cloud-sdk/install.sh --quiet
     fi
 }
 

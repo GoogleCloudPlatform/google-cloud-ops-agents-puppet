@@ -26,6 +26,7 @@ cat <<END>packer.json
           "ssh_username": "packer",
           "zone": "us-east1-b",
           "startup_script_file": "bootstrap.sh",
+          "wait_to_add_ssh_keys": "20s",
           "scopes": [
             "https://www.googleapis.com/auth/userinfo.email",
             "https://www.googleapis.com/auth/compute",
