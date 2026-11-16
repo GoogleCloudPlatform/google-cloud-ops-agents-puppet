@@ -26,8 +26,6 @@
 #   Optional source URI for overriding the primary agent configuration file.
 # @param additional_config_dir
 #   Optional source URI for overriding the plugins directory (`monitoring` or `logging`).
-# @param script_checksum
-#   Optional 64-character lowercase SHA-256 hex digest to pin the Linux repository installer script.
 #
 # @example
 #   google_cloud_ops::agent { 'ops-agent':
@@ -39,10 +37,9 @@
 define google_cloud_ops::agent (
   Enum['ops-agent', 'monitoring', 'logging'] $agent_type,
   String $version = 'latest',
-  Enum['present', 'absent'] $package_state = 'present',
+  String $package_state = 'present',
   String $main_config = '',
-  String $additional_config_dir = '',
-  Optional[Pattern[/\A[a-f0-9]{64}\z/]] $script_checksum = undef,
+  String $additional_config_dir = ''
 ) {
 
   # windows globals
@@ -77,13 +74,6 @@ define google_cloud_ops::agent (
       $script_source = 'https://dl.google.com/cloudagents/add-logging-agent-repo.sh'
     }
     $script_path = "${cache_dir}/${script_name}"
-    if $script_checksum =~ String {
-      $remote_file_ensure      = 'present'
-      $effective_checksum_type = 'sha256'
-    } else {
-      $remote_file_ensure      = 'latest'
-      $effective_checksum_type = undef
-    }
   }
 
   if $facts['os']['family'] == 'windows' {
@@ -161,15 +151,13 @@ define google_cloud_ops::agent (
 
     # puppet module install lwf-remote_file --version 1.1.3
     remote_file { $script_path:
-      ensure        => $remote_file_ensure,
-      source        => $script_source,
-      checksum      => $script_checksum,
-      checksum_type => $effective_checksum_type,
-      verify_peer   => true,
-      owner         => 'root',
-      group         => 'root',
-      mode          => '0700',
-      require       => File[$cache_dir],
+      ensure      => 'latest',
+      source      => $script_source,
+      verify_peer => true,
+      owner       => 'root',
+      group       => 'root',
+      mode        => '0700',
+      require     => File[$cache_dir],
     }
 
     $quoted_script_path = shellquote($script_path)

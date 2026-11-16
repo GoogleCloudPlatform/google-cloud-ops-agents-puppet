@@ -59,8 +59,6 @@ describe 'google_cloud_ops::agent' do
       is_expected.to contain_remote_file('/var/cache/google-cloud-ops-agents/ops-agent/add-google-cloud-ops-agent-repo.sh').with(
         ensure: 'latest',
         source: 'https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh',
-        checksum: nil,
-        checksum_type: nil,
         verify_peer: true,
         owner: 'root',
         group: 'root',
@@ -79,26 +77,6 @@ describe 'google_cloud_ops::agent' do
     end
 
     it { is_expected.not_to contain_file('/tmp/ops-agent') }
-  end
-
-  context 'on Linux with custom script_checksum' do
-    let(:params) do
-      {
-        agent_type: 'monitoring',
-        script_checksum: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-      }
-    end
-
-    it { is_expected.to compile.with_all_deps }
-
-    it do
-      is_expected.to contain_remote_file('/var/cache/google-cloud-ops-agents/monitoring/add-monitoring-agent-repo.sh').with(
-        ensure: 'present',
-        checksum: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-        checksum_type: 'sha256',
-        verify_peer: true,
-      )
-    end
   end
 
   context 'with unsupported agent_type' do

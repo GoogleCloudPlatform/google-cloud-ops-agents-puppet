@@ -49,7 +49,6 @@ To build the module from source:
 | `version`               | `latest`      | The version variable can be used to specify which version of the agent to install. The allowed values are `latest`, `MAJOR_VERSION.*.*` and `MAJOR_VERSION.MINOR_VERSION.PATCH_VERSION`, which are described in detail below. |
 | `main_config`           |               | Optional value for overriding the default configuration. For configuration syntax instructions, see [Ops Agent Config](https://cloud.google.com/stackdriver/docs/solutions/agents/ops-agent/configuration), [Logging Agent Config](https://cloud.google.com/logging/docs/agent/logging/configuration), and [Monitoring Agent](https://cloud.google.com/monitoring/agent/monitoring/configuration) for more details.           |
 | `additional_config_dir` |               | Optional value for overriding the plugins directory for the `monitoring` or `logging` agents |
-| `script_checksum`       |               | Optional 64-character lowercase SHA-256 hex digest to pin and verify the Linux repository installer script |
 
 ### Version
 
