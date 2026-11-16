@@ -16,6 +16,19 @@
 #
 # Installs a Google Cloud agent
 #
+# @param agent_type
+#   The agent type to manage (`ops-agent`, `monitoring`, or `logging`).
+# @param version
+#   The agent version to install (`latest`, `MAJOR.*.*`, or `MAJOR.MINOR.PATCH`).
+# @param package_state
+#   Whether the agent should be `present` or `absent`.
+# @param main_config
+#   Optional source URI for overriding the primary agent configuration file.
+# @param additional_config_dir
+#   Optional source URI for overriding the plugins directory (`monitoring` or `logging`).
+# @param script_checksum
+#   Optional 64-character lowercase SHA-256 hex digest to pin the Linux repository installer script.
+#
 # @example
 #   google_cloud_ops::agent { 'ops-agent':
 #    agent_type    => 'ops-agent',
@@ -24,11 +37,12 @@
 #    main_config   => 'puppet:///modules/example/ops_agent/config.yaml',
 #  }
 define google_cloud_ops::agent (
-  String $agent_type,
+  Enum['ops-agent', 'monitoring', 'logging'] $agent_type,
   String $version = 'latest',
-  String $package_state = 'present',
+  Enum['present', 'absent'] $package_state = 'present',
   String $main_config = '',
-  String $additional_config_dir = ''
+  String $additional_config_dir = '',
+  Optional[Pattern[/\A[a-f0-9]{64}\z/]] $script_checksum = undef,
 ) {
 
   # windows globals
@@ -42,22 +56,33 @@ define google_cloud_ops::agent (
 
   # linux globals
   } else {
-    $tmp_dir = "/tmp/${agent_type}"
-    $script_path = "${tmp_dir}/add-monitoring-agent-repo.sh"
+    $cache_base_dir = '/var/cache/google-cloud-ops-agents'
+    $cache_dir      = "${cache_base_dir}/${agent_type}"
     if $agent_type == 'ops-agent' {
-      $service_name = 'google-cloud-ops-agent'
-      $config_path    = '/etc/google-cloud-ops-agent/config.yaml'
-      $script_source  = 'https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh'
+      $service_name  = 'google-cloud-ops-agent'
+      $config_path   = '/etc/google-cloud-ops-agent/config.yaml'
+      $script_name   = 'add-google-cloud-ops-agent-repo.sh'
+      $script_source = 'https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh'
     } elsif $agent_type == 'monitoring' {
-      $service_name   = 'stackdriver-agent'
-      $config_path    = '/etc/stackdriver/collectd.conf'
-      $plugins_path   = '/etc/stackdriver/collectd.d'
-      $script_source  = 'https://dl.google.com/cloudagents/add-monitoring-agent-repo.sh'
+      $service_name  = 'stackdriver-agent'
+      $config_path   = '/etc/stackdriver/collectd.conf'
+      $plugins_path  = '/etc/stackdriver/collectd.d'
+      $script_name   = 'add-monitoring-agent-repo.sh'
+      $script_source = 'https://dl.google.com/cloudagents/add-monitoring-agent-repo.sh'
     } elsif $agent_type == 'logging' {
-      $service_name   = 'google-fluentd'
-      $config_path    = '/etc/google-fluentd/google-fluentd.conf'
-      $plugins_path   = '/etc/google-fluentd/plugin'
-      $script_source  = 'https://dl.google.com/cloudagents/add-logging-agent-repo.sh'
+      $service_name  = 'google-fluentd'
+      $config_path   = '/etc/google-fluentd/google-fluentd.conf'
+      $plugins_path  = '/etc/google-fluentd/plugin'
+      $script_name   = 'add-logging-agent-repo.sh'
+      $script_source = 'https://dl.google.com/cloudagents/add-logging-agent-repo.sh'
+    }
+    $script_path = "${cache_dir}/${script_name}"
+    if $script_checksum =~ String {
+      $remote_file_ensure      = 'present'
+      $effective_checksum_type = 'sha256'
+    } else {
+      $remote_file_ensure      = 'latest'
+      $effective_checksum_type = undef
     }
   }
 
@@ -113,32 +138,57 @@ define google_cloud_ops::agent (
 
   # All other supported platforms are Linux
   } else {
-      file { $tmp_dir:
+    if !defined(File[$cache_base_dir]) {
+      file { $cache_base_dir:
         ensure => 'directory',
         owner  => 'root',
         group  => 'root',
-        mode   => '0755'
+        mode   => '0700',
+        force  => true,
+      }
+    }
+
+    file { $cache_dir:
+      ensure  => 'directory',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0700',
+      force   => true,
+      purge   => true,
+      recurse => true,
+      require => File[$cache_base_dir],
     }
 
     # puppet module install lwf-remote_file --version 1.1.3
     remote_file { $script_path:
-      ensure => present,
-      source => $script_source,
-      mode   => '0700',
+      ensure        => $remote_file_ensure,
+      source        => $script_source,
+      checksum      => $script_checksum,
+      checksum_type => $effective_checksum_type,
+      verify_peer   => true,
+      owner         => 'root',
+      group         => 'root',
+      mode          => '0700',
+      require       => File[$cache_dir],
     }
 
+    $quoted_script_path = shellquote($script_path)
+    $quoted_version     = shellquote($version)
+
     if $package_state == 'present' {
-        exec { "install-${agent_type}":
-          command  => "${script_path} --also-install --version=${version}",
-          provider => shell,
-          onlyif   => "${script_path} --also-install --version=${version} --dry-run | grep 'installation succeeded'"
-        }
+      exec { "install-${agent_type}":
+        command  => "${quoted_script_path} --also-install --version=${quoted_version}",
+        provider => shell,
+        onlyif   => "${quoted_script_path} --also-install --version=${quoted_version} --dry-run | grep 'installation succeeded'",
+        require  => [File[$cache_dir], Remote_file[$script_path]],
+      }
     } else {
-        exec { "install-${agent_type}":
-          command  => "${script_path} --uninstall --remove-repo",
-          provider => shell,
-          onlyif   => "${script_path} --uninstall --remove-repo --dry-run | grep 'uninstallation succeeded'"
-        }
+      exec { "install-${agent_type}":
+        command  => "${quoted_script_path} --uninstall --remove-repo",
+        provider => shell,
+        onlyif   => "${quoted_script_path} --uninstall --remove-repo --dry-run | grep 'uninstallation succeeded'",
+        require  => [File[$cache_dir], Remote_file[$script_path]],
+      }
     }
 
     if $package_state == 'present' {

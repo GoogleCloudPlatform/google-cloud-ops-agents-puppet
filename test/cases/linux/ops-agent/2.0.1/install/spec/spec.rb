@@ -26,3 +26,14 @@ end
 describe file('/etc/google-cloud-ops-agent/config.yaml') do
     it { should exist }
 end
+
+describe file('/var/cache/google-cloud-ops-agents') do
+    it { should be_directory }
+    its('owner') { should eq 'root' }
+    its('group') { should eq 'root' }
+    its('mode') { should cmp '0700' }
+end
+
+describe file('/tmp/ops-agent') do
+    it { should_not exist }
+end
