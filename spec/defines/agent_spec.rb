@@ -34,17 +34,7 @@ describe 'google_cloud_ops::agent' do
     it { is_expected.to compile.with_all_deps }
 
     it do
-      is_expected.to contain_file('/var/cache/google-cloud-ops-agents').with(
-        ensure: 'directory',
-        owner: 'root',
-        group: 'root',
-        mode: '0700',
-        force: true,
-      )
-    end
-
-    it do
-      is_expected.to contain_file('/var/cache/google-cloud-ops-agents/ops-agent').with(
+      is_expected.to contain_file('/var/cache/google-cloud-ops-puppet-ops-agent').with(
         ensure: 'directory',
         owner: 'root',
         group: 'root',
@@ -52,27 +42,27 @@ describe 'google_cloud_ops::agent' do
         force: true,
         purge: true,
         recurse: true,
-      ).that_requires('File[/var/cache/google-cloud-ops-agents]')
+      )
     end
 
     it do
-      is_expected.to contain_remote_file('/var/cache/google-cloud-ops-agents/ops-agent/add-google-cloud-ops-agent-repo.sh').with(
+      is_expected.to contain_remote_file('/var/cache/google-cloud-ops-puppet-ops-agent/add-google-cloud-ops-agent-repo.sh').with(
         ensure: 'latest',
         source: 'https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh',
         verify_peer: true,
         owner: 'root',
         group: 'root',
         mode: '0700',
-      ).that_requires('File[/var/cache/google-cloud-ops-agents/ops-agent]')
+      ).that_requires('File[/var/cache/google-cloud-ops-puppet-ops-agent]')
     end
 
     it do
       is_expected.to contain_exec('install-ops-agent').with(
-        command: '/var/cache/google-cloud-ops-agents/ops-agent/add-google-cloud-ops-agent-repo.sh --also-install --version=latest',
+        command: '/var/cache/google-cloud-ops-puppet-ops-agent/add-google-cloud-ops-agent-repo.sh --also-install --version=latest',
         provider: 'shell',
       ).that_requires([
-        'File[/var/cache/google-cloud-ops-agents/ops-agent]',
-        'Remote_file[/var/cache/google-cloud-ops-agents/ops-agent/add-google-cloud-ops-agent-repo.sh]',
+        'File[/var/cache/google-cloud-ops-puppet-ops-agent]',
+        'Remote_file[/var/cache/google-cloud-ops-puppet-ops-agent/add-google-cloud-ops-agent-repo.sh]',
       ])
     end
 

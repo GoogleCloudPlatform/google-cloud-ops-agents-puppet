@@ -18,7 +18,7 @@ describe service('google-fluentd') do
     it { should be_running }
 end
 
-describe file('/var/cache/google-cloud-ops-agents') do
+describe file('/var/cache/google-cloud-ops-puppet-logging') do
     it { should be_directory }
     its('owner') { should eq 'root' }
     its('group') { should eq 'root' }

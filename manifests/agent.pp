@@ -53,8 +53,7 @@ define google_cloud_ops::agent (
 
   # linux globals
   } else {
-    $cache_base_dir = '/var/cache/google-cloud-ops-agents'
-    $cache_dir      = "${cache_base_dir}/${agent_type}"
+    $cache_dir = "/var/cache/google-cloud-ops-puppet-${agent_type}"
     if $agent_type == 'ops-agent' {
       $service_name  = 'google-cloud-ops-agent'
       $config_path   = '/etc/google-cloud-ops-agent/config.yaml'
@@ -128,16 +127,6 @@ define google_cloud_ops::agent (
 
   # All other supported platforms are Linux
   } else {
-    if !defined(File[$cache_base_dir]) {
-      file { $cache_base_dir:
-        ensure => 'directory',
-        owner  => 'root',
-        group  => 'root',
-        mode   => '0700',
-        force  => true,
-      }
-    }
-
     file { $cache_dir:
       ensure  => 'directory',
       owner   => 'root',
@@ -146,7 +135,6 @@ define google_cloud_ops::agent (
       force   => true,
       purge   => true,
       recurse => true,
-      require => File[$cache_base_dir],
     }
 
     # puppet module install lwf-remote_file --version 1.1.3
