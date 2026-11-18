@@ -17,3 +17,14 @@ describe service('stackdriver-agent') do
     it { should be_enabled }
     it { should be_running }
 end
+
+describe file('/var/cache/google-cloud-ops-puppet-monitoring') do
+    it { should be_directory }
+    its('owner') { should eq 'root' }
+    its('group') { should eq 'root' }
+    its('mode') { should cmp '0700' }
+end
+
+describe file('/tmp/monitoring') do
+    it { should_not exist }
+end
